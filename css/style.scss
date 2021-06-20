@@ -4,7 +4,9 @@ $colors: (
     primary : rgb(68, 33, 243),
     on-primary : rgb(255,255,255),
     surface : rgb(242, 242, 242),
-    on-surface : rgb(66, 66, 66)
+    on-surface : rgb(66, 66, 66),
+    container : rgb(242, 242, 242),
+    on-container : rgb(66, 66, 66)
 );
 //dark theme
 // $colors-dark: (
@@ -17,7 +19,9 @@ $colors-dark: (
     primary : rgb(68, 33, 243),
     on-primary : rgb(255,255,255),
     surface : rgb(242, 242, 242),
-    on-surface : rgb(66, 66, 66)
+    on-surface : rgb(66, 66, 66),
+    container : rgb(242, 242, 242),
+    on-container : rgb(66, 66, 66)
 );
 //converting scss variable into css variable
 body {
@@ -64,12 +68,15 @@ body{
         max-width: 100%;
         margin: 0 auto;
         border-radius: 20px;
-        background: getColor(surface);
+        background: getColor(container);
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
         padding: 20px;
- 
+        
+        h1{
+            color: getColor(primary);
+        }
         p{
-            color: getColor(on-surface);
+            color: getColor(on-container);
             
         }
     }
@@ -154,6 +161,7 @@ body{
     background-color: getColor(primary);
     transform: scale(6, 6);
     transition: box-shadow 0.2s;
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
 }
 
 /* Webkit | Hover, Focus */
@@ -363,4 +371,15 @@ body{
     .theming {
         transform: translate(-100%, 70%);
     }
+}
+
+.color_selector{
+    background-color: #d2d8d8;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    border-top-right-radius: 10px;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
 }
