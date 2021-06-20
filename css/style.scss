@@ -1,17 +1,23 @@
 //defining scss variable 
 //light theme
 $colors: (
-    base : #ffffff,
-    text : #000000,
-    base2 : #eeeeee,
-    text2 : #111111
+    primary : rgb(68, 33, 243),
+    on-primary : rgb(255,255,255),
+    surface : rgb(242, 242, 242),
+    on-surface : rgb(66, 66, 66)
 );
 //dark theme
+// $colors-dark: (
+//     primary : #000000,
+//     on-primary: #ffffff,
+//     surface: #2c2f36,
+//     on-surface: #aaaaaa
+// );
 $colors-dark: (
-    base : #000000,
-    text: #ffffff,
-    base2: #2c2f36,
-    text2: #aaaaaa
+    primary : rgb(68, 33, 243),
+    on-primary : rgb(255,255,255),
+    surface : rgb(242, 242, 242),
+    on-surface : rgb(66, 66, 66)
 );
 //converting scss variable into css variable
 body {
@@ -30,47 +36,331 @@ body {
     }
 }
 
-body.dark {
-    @each $name, $color in $colors-dark{
-        --color-#{$name} : #{$color};
-    }
---theme : 'dark';
-}
-
-body.darken {
-    @each $name, $color in $colors-dark{
-        --color-#{$name} : #{$color};
-    }
---theme : 'dark';
-}
 
 //creating a function to get color instead of using css varible
 @function getColor($color-name){
     @return var(--color-#{$color-name});
 }
 
+@function getColorWithAlpha($color-name, $alpha){
+    @return rgba(var(--color-#{$color-name}), $alpha);
+}
+
 body{
-    background: getColor(base);
+    background: getColor(surface);
     margin: 0;
     padding: 0;
+    width: 100%;
+    
 
 }
 .container{
-    background: getColor(base);
+    background: getColor(surface);
     color: getColor(text);
     margin-top: 50px;
     .card{
         height: auto;
-        width: 300px;
+        width: 400px;
+        max-width: 100%;
         margin: 0 auto;
         border-radius: 20px;
-        background: getColor(base2);
-        // background-color: red;;
+        background: getColor(surface);
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
         padding: 20px;
  
         p{
-            color: getColor(text2);
+            color: getColor(on-surface);
             
         }
+    }
+}
+
+
+
+.slider {
+    --safari-helper1: rgba(var(--color-primary, 33, 150, 243), 0.04); 
+    --safari-helper2: rgba(var(--color-primary, 33, 150, 243), 0.12); 
+    --safari-helper3: rgba(var(--color-primary, 33, 150, 243), 0.16); 
+    --safari-helper4: rgba(var(--color-primary, 33, 150, 243), 0.24); 
+    display: inline-block;
+    width: 200px;
+    color: rgba(var(--color-on-surface, 0, 0, 0), 0.87); 
+    font-family: var(--font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system); 
+    font-size: 16px; 
+    line-height: 1.5;
+   
+}
+
+/* Input */
+.slider > input {
+    -webkit-appearance: none;
+    position: relative;
+    top: 24px;
+    display: block;
+    margin: 0 0 -36px;
+    width: 100%;
+    height: 36px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/* Without Span */
+.slider > input:last-child {
+    position: static;
+    margin: 0;
+}
+
+/* Span */
+.slider > span {
+    display: inline-block;
+    margin-bottom: 36px;
+}
+
+/* Focus */
+.slider > input:focus {
+    outline: none;
+}
+
+/* Disabled */
+.slider > input:disabled {
+    cursor: default;
+    opacity: 0.38;
+}
+
+.slider > input:disabled + span {
+    color: rgba(var(--color-on-surface, 0, 0, 0), 0.38);
+}
+
+/* Webkit | Track */
+.slider > input::-webkit-slider-runnable-track {
+    margin: 17px 0;
+    border-radius: 1px;
+    width: 100%;
+    height: 2px;
+    // background-color: rgba(var(--color-primary, 33, 150, 243), 0.24);
+    background: linear-gradient(to right, #000, #fff);
+}
+
+/* Webkit | Thumb */
+.slider > input::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 50%;
+    height: 2px;
+    width: 2px;
+    // background-color: rgba(var(--color-primary, 33, 150, 243), 1);
+    // background-color: getColorWithAlpha(primary,1 );
+    background-color: getColor(primary);
+    transform: scale(6, 6);
+    transition: box-shadow 0.2s;
+}
+
+/* Webkit | Hover, Focus */
+.slider:hover > input::-webkit-slider-thumb {
+    box-shadow: 0 0 0 2px var(--safari-helper1);
+}
+
+.slider > input:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 2px var(--safari-helper2);
+}
+
+.slider:hover > input:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 2px var(--safari-helper3);
+}
+
+/* Webkit | Active */
+.slider > input:active::-webkit-slider-thumb {
+     box-shadow: 0 0 0 2px var(--safari-helper4) !important;
+}
+
+/* Webkit | Disabled */
+.slider > input:disabled::-webkit-slider-runnable-track {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 0.38);
+}
+
+.slider > input:disabled::-webkit-slider-thumb {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 1);
+    color: rgba(var(--color-surface, 255, 255, 255), 1); /* Safari */
+    box-shadow: 0 0 0 1px rgba(var(--color-surface, 255, 255, 255), 1) !important;
+    transform: scale(4, 4);
+}
+
+/* Moz | Track */
+.slider > input::-moz-range-track {
+    margin: 17px 0;
+    border-radius: 1px;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 0.24);
+}
+
+/* Moz | Thumb */
+.slider > input::-moz-range-thumb {
+    appearance: none;
+    -moz-appearance: none;
+    border: none;
+    border-radius: 50%;
+    height: 2px;
+    width: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 1);
+    transform: scale(6, 6);
+    transition: box-shadow 0.2s;
+}
+
+/* Moz | Progress */
+.slider > input::-moz-range-progress {
+    border-radius: 1px;
+    height: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 1);
+}
+
+/* Moz | Hover, Focus */
+.slider:hover > input:hover::-moz-range-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.04);
+}
+
+.slider > input:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.12);
+}
+
+.slider:hover > input:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.16);
+}
+
+/* Moz | Active */
+.slider > input:active::-moz-range-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.24) !important;
+}
+
+/* Moz | Disabled */
+.slider > input:disabled::-moz-range-track {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 0.38);
+}
+
+.slider > input:disabled::-moz-range-progress {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 0.87);
+}
+
+.slider > input:disabled::-moz-range-thumb {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 1);
+    box-shadow: 0 0 0 1px rgba(var(--color-surface, 255, 255, 255), 1) !important;
+    transform: scale(4, 4);
+}
+
+.slider > input::-moz-focus-outer {
+    border: none;
+}
+
+/* MS | Track */
+.slider > input::-ms-track {
+    box-sizing: border-box;
+    margin: 17px 0;
+    border: none;
+    border-radius: 1px;
+    padding: 0 17px;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+}
+
+.slider > input::-ms-fill-lower {
+    border-radius: 1px;
+    height: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 1);
+}
+
+/* MS | Progress */
+.slider > input::-ms-fill-upper {
+    border-radius: 1px;
+    height: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 0.24);
+}
+
+/* MS | Thumb */
+.slider > input::-ms-thumb {
+    appearance: none;
+    margin: 0 17px;
+    border: none;
+    border-radius: 50%;
+    height: 2px;
+    width: 2px;
+    background-color: rgba(var(--color-primary, 33, 150, 243), 1);
+    transform: scale(6, 6);
+    transition: box-shadow 0.2s;
+}
+
+/* MS | Hover, Focus */
+.slider:hover > input::-ms-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.04);
+}
+
+.slider > input:focus::-ms-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.12);
+}
+
+.slider:hover > input:focus::-ms-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.16);
+}
+
+/* MS | Active */
+.slider > input:active::-ms-thumb {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary, 33, 150, 243), 0.24) !important;
+}
+
+/* MS | Disabled */
+.slider > input:disabled::-ms-fill-lower {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 0.38);
+}
+
+.slider > input:disabled::-ms-fill-upper {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 0.38);
+    opacity: 0.38;
+}
+
+.slider > input:disabled::-ms-thumb {
+    background-color: rgba(var(--color-on-surface, 0, 0, 0), 1);
+    box-shadow: 0 0 0 1px rgba(var(--color-surface, 255, 255, 255), 1) !important;
+    transform: scale(4, 4);
+}
+
+
+
+// .slider > input::-webkit-slider-runnable-track {
+
+//     background: linear-gradient(to right,hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%));;
+// }
+
+
+
+#primary > input::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+#primary > input::-moz-range-track {
+    background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+#primary > input::-ms-track {
+    background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+
+/* Overriding */
+#on-primary > input::-webkit-slider-thumb {
+    background-color: getColor(on-primary);
+}
+
+#surface > input::-webkit-slider-thumb {
+    background-color: getColor(surface);
+}
+
+#on-surface > input::-webkit-slider-thumb {
+    background-color: getColor(on-surface);
+}
+
+@media only screen and (max-width: 680px) {
+    .theming {
+        transform: translate(-100%, 70%);
     }
 }

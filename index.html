@@ -4,15 +4,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Light and Dark Mode With SCSS</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css">
     <link rel="stylesheet" href="./css/style.css" type="text/css">
 </head>
 <body class="dark1">
 <div class="container">
   <div class="card">
     <h1>Dynamic Dark Mode Light Mode and Other Color Pattern Using CSS</h1>
-    <p>t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+
+    <label id="primary" class="slider">
+      <input type="range" min="0" max="360" value="207">
+      <span>Primary</span>
+  </label>
+    <label id="on-primary" class="slider">
+      <input type="range" min="0" max="255" value="255">
+      <span>On Primary</span>
+  </label>
+    <label id="surface" class="slider">
+      <input type="range" min="0" max="255" value="255">
+      <span>Surface</span>
+  </label>
+    <label id="on-surface" class="slider">
+      <input type="range" min="0" max="255" value="0">
+      <span>On Surface</span>
+  </label>
   </div>
+  
 </div>
 </body>
+<script>
+const hsl2rgb = (H, S, L) => [5, 3, 1].map(i => A(L * 2) * S * ([1, Y, 0, 0, Y, 1][(i - ~H) % 6] - .5) + L, Y = (A = n => n > 1 ? 2 - n : n)((H /= 60) % 2));
+
+document.querySelector('#primary > input').oninput = event => {
+  const rgb = hsl2rgb(event.target.value, 0.897, 0.541);
+  document.body.style.setProperty('--color-primary', `rgb(${Math.round(rgb[0] * 255)}, ${Math.round(rgb[1] * 255)}, ${Math.round(rgb[2] * 255)})`);
+};
+
+document.querySelector('#on-primary > input').oninput = event => {
+  const value = event.target.value;
+  document.body.style.setProperty('--color-on-primary', `rgb(${value}, ${value}, ${value})`);
+};
+
+document.querySelector('#surface > input').oninput = event => {
+  const value = event.target.value;
+  document.body.style.setProperty('--color-surface', `rgb(${value}, ${value}, ${value})`);
+};
+
+document.querySelector('#on-surface > input').oninput = event => {
+  const value = event.target.value;
+  document.body.style.setProperty('--color-on-surface', `rgb(${value}, ${value}, ${value})`);
+};
+
+</script>
 </html>
